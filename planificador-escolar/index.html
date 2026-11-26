@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planificador escolar</title>
+  <meta name="description" content="Organizá tus materias y tareas escolares, con progreso y fechas de entrega.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="saltar" href="#tareas">Saltar a las tareas</a>
+
+  <header class="cabecera">
+    <h1>Planificador escolar</h1>
+    <p>Cargá tus materias, anotá las tareas y mirá cuánto te falta.</p>
+  </header>
+
+  <!-- Resumen general (se actualiza solo) -->
+  <section class="resumen" aria-label="Resumen general" id="resumen"></section>
+
+  <!-- Mensajes de error / confirmación (lector de pantalla los anuncia) -->
+  <div id="mensaje" class="mensaje" role="status" aria-live="polite"></div>
+
+  <div class="layout">
+    <!-- COLUMNA IZQUIERDA: materias -->
+    <aside class="panel" aria-labelledby="t-materias">
+      <h2 id="t-materias">Materias</h2>
+      <form id="form-materia" class="form">
+        <label for="materia-nombre">Nombre de la materia</label>
+        <input id="materia-nombre" type="text" maxlength="40" required placeholder="Ej: Historia">
+        <label for="materia-color">Color</label>
+        <input id="materia-color" type="color" value="#1f3a93">
+        <button type="submit" class="btn btn-primario">Agregar materia</button>
+      </form>
+      <ul id="lista-materias" class="materias"></ul>
+    </aside>
+
+    <!-- COLUMNA DERECHA: tareas -->
+    <main id="tareas">
+      <section class="panel" aria-labelledby="t-form-tarea">
+        <h2 id="t-form-tarea">Nueva tarea</h2>
+        <form id="form-tarea" class="form form-tarea">
+          <input type="hidden" id="tarea-id">
+          <div class="campo campo-ancho">
+            <label for="tarea-titulo">Título</label>
+            <input id="tarea-titulo" type="text" maxlength="80" required placeholder="Ej: Estudiar para la prueba">
+          </div>
+          <div class="campo campo-ancho">
+            <label for="tarea-desc">Detalle (opcional)</label>
+            <textarea id="tarea-desc" rows="2" maxlength="200"></textarea>
+          </div>
+          <div class="campo">
+            <label for="tarea-materia">Materia</label>
+            <select id="tarea-materia" required></select>
+          </div>
+          <div class="campo">
+            <label for="tarea-fecha">Fecha de entrega</label>
+            <input id="tarea-fecha" type="date" required>
+          </div>
+          <div class="campo">
+            <label for="tarea-prioridad">Prioridad</label>
+            <select id="tarea-prioridad">
+              <option value="baja">Baja</option>
+              <option value="media" selected>Media</option>
+              <option value="alta">Alta</option>
+            </select>
+          </div>
+          <div class="acciones campo-ancho">
+            <button type="submit" id="btn-guardar" class="btn btn-primario">Agregar tarea</button>
+            <button type="button" id="btn-cancelar" class="btn" hidden>Cancelar edición</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="t-lista">
+        <h2 id="t-lista">Mis tareas</h2>
+        <div class="filtros">
+          <div class="campo">
+            <label for="f-texto">Buscar</label>
+            <input id="f-texto" type="search" placeholder="Palabra clave">
+          </div>
+          <div class="campo">
+            <label for="f-estado">Estado</label>
+            <select id="f-estado">
+              <option value="todas">Todas</option>
+              <option value="pendientes">Pendientes</option>
+              <option value="vencidas">Vencidas</option>
+              <option value="completadas">Completadas</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="f-materia">Materia</label>
+            <select id="f-materia"></select>
+          </div>
+          <div class="campo">
+            <label for="f-orden">Ordenar por</label>
+            <select id="f-orden">
+              <option value="fecha">Fecha de entrega</option>
+              <option value="prioridad">Prioridad</option>
+            </select>
+          </div>
+        </div>
+        <ul id="lista-tareas" class="tareas"></ul>
+      </section>
+    </main>
+  </div>
+
+  <footer class="pie">Escuela Experimental ProA</footer>
+
+  <!-- El orden importa: primero las clases, después la interfaz -->
+  <script src="js/Tarea.js"></script>
+  <script src="js/Materia.js"></script>
+  <script src="js/Planificador.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

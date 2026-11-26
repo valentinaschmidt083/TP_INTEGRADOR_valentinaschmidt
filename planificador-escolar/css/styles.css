@@ -1,0 +1,138 @@
+/* ==========================================================
+   Planificador escolar - estilos
+   Idea visual: hoja de cuaderno cuadriculado, con tinta azul
+   y margen rojo. Mobile first: base para celular, y se
+   amplía con media queries para tablet y computadora.
+   ========================================================== */
+:root {
+  --papel: #f7f9fc;
+  --tarjeta: #ffffff;
+  --tinta: #1b2a5c;
+  --tinta-suave: #4a5578;
+  --linea: #d5dcec;
+  --margen: #d64550;
+  --resaltador: #ffe27a;
+  --ok: #1d7a46;
+  --radio: 10px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--tinta);
+  line-height: 1.55;
+  background-color: var(--papel);
+  /* cuadrícula de cuaderno */
+  background-image:
+    linear-gradient(var(--linea) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linea) 1px, transparent 1px);
+  background-size: 28px 28px;
+  padding: 0 1rem 2rem;
+  border-left: 4px solid var(--margen); /* margen rojo del cuaderno */
+}
+.saltar { position: absolute; left: -999px; background: var(--tinta); color: #fff; padding: .5rem 1rem; }
+.saltar:focus { left: 1rem; top: .5rem; z-index: 10; }
+
+.cabecera { max-width: 1100px; margin: 0 auto; padding: 1.5rem 0 .5rem; }
+.cabecera h1 { margin: 0; font-size: clamp(1.7rem, 5vw, 2.6rem); letter-spacing: -.02em; }
+.cabecera p { margin: .25rem 0 0; color: var(--tinta-suave); }
+
+/* Resumen */
+.resumen { max-width: 1100px; margin: 1rem auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+.dato { background: var(--tarjeta); border: 2px solid var(--tinta); border-radius: var(--radio); padding: .6rem .9rem; display: flex; flex-direction: column; }
+.dato strong { font-size: 1.8rem; line-height: 1.1; }
+.dato span { font-size: .85rem; color: var(--tinta-suave); }
+.dato.alerta { border-color: var(--margen); }
+.dato.alerta strong { color: var(--margen); }
+.dato-progreso { grid-column: 1 / -1; background: var(--resaltador); border-color: var(--tinta); }
+.dato-progreso span { color: var(--tinta); }
+
+.barra { height: 10px; background: #e7ebf5; border-radius: 99px; overflow: hidden; margin: .4rem 0; }
+.barra i { display: block; height: 100%; background: var(--c, var(--tinta)); transition: width .35s ease; }
+.dato-progreso .barra { background: #fff; }
+
+.mensaje { max-width: 1100px; margin: 0 auto; min-height: 0; }
+.mensaje.ok, .mensaje.error { padding: .6rem 1rem; border-radius: var(--radio); margin-bottom: .75rem; font-weight: 500; }
+.mensaje.ok { background: #dff3e7; color: var(--ok); border: 1px solid var(--ok); }
+.mensaje.error { background: #fde4e6; color: #a21c2b; border: 1px solid var(--margen); }
+
+/* Layout principal */
+.layout { max-width: 1100px; margin: 0 auto; display: grid; gap: 1rem; grid-template-columns: 1fr; }
+.panel { background: var(--tarjeta); border: 2px solid var(--tinta); border-radius: var(--radio); padding: 1rem; margin-bottom: 1rem; }
+.panel h2 { margin: 0 0 .75rem; font-size: 1.2rem; }
+
+/* Formularios */
+.form { display: grid; gap: .6rem; }
+label { font-size: .85rem; font-weight: 500; display: block; margin-bottom: .2rem; }
+input, select, textarea {
+  width: 100%; font: inherit; color: inherit; padding: .55rem .7rem;
+  border: 2px solid var(--linea); border-radius: 8px; background: #fff;
+}
+input[type="color"] { padding: .15rem; height: 2.6rem; cursor: pointer; }
+textarea { resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible {
+  outline: 3px solid var(--margen); outline-offset: 2px;
+}
+.form-tarea, .filtros { display: grid; grid-template-columns: 1fr; gap: .6rem; }
+.acciones { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+/* Botones */
+.btn {
+  font: inherit; font-weight: 500; cursor: pointer; padding: .55rem 1rem; border-radius: 8px;
+  border: 2px solid var(--tinta); background: #fff; color: var(--tinta);
+  transition: background .15s, transform .1s;
+}
+.btn:hover { background: var(--resaltador); }
+.btn:active { transform: translateY(1px); }
+.btn-primario { background: var(--tinta); color: #fff; }
+.btn-primario:hover { background: #2b3f86; }
+.btn-chico { padding: .3rem .65rem; font-size: .82rem; }
+.btn-peligro { border-color: var(--margen); color: #a21c2b; }
+.btn-peligro:hover { background: #fde4e6; }
+
+/* Materias */
+.materias, .tareas { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .6rem; }
+.materia { border-left: 8px solid var(--c); background: #f4f6fc; border-radius: 8px; padding: .6rem .8rem; }
+.materia-cab { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+.materia small { color: var(--tinta-suave); }
+
+/* Tareas */
+.tarea { display: flex; flex-direction: column; gap: .6rem; border: 2px solid var(--linea); border-left: 8px solid var(--c); border-radius: 8px; padding: .7rem .9rem; background: #fff; }
+.tarea h3 { margin: 0; font-size: 1.05rem; }
+.tarea p { margin: .15rem 0; color: var(--tinta-suave); font-size: .92rem; }
+.tarea .meta { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: center; font-size: .82rem; }
+.tarea.hecha h3 { text-decoration: line-through; color: var(--tinta-suave); }
+.tarea.hecha { background: #f1f4f9; }
+.tarea.vencida { border-color: var(--margen); border-left-color: var(--margen); background: #fff6f6; }
+.tarea-acciones { display: flex; gap: .4rem; flex-wrap: wrap; }
+.etiqueta { background: var(--c); color: #fff; padding: .05rem .55rem; border-radius: 99px; font-weight: 500; }
+.prio-alta { color: #a21c2b; font-weight: 700; }
+.prio-media { color: #8a5a00; font-weight: 500; }
+.prio-baja { color: var(--ok); }
+.txt-alerta { color: var(--margen); }
+.vacio { color: var(--tinta-suave); padding: .8rem; border: 2px dashed var(--linea); border-radius: 8px; text-align: center; }
+
+.pie { max-width: 1100px; margin: 1rem auto 0; font-size: .8rem; color: var(--tinta-suave); text-align: center; }
+
+/* Tablet */
+@media (min-width: 600px) {
+  .resumen { grid-template-columns: repeat(4, 1fr); }
+  .dato-progreso { grid-column: auto; }
+  .form-tarea { grid-template-columns: repeat(3, 1fr); }
+  .campo-ancho { grid-column: 1 / -1; }
+  .filtros { grid-template-columns: repeat(2, 1fr); }
+  .tarea { flex-direction: row; justify-content: space-between; align-items: center; }
+  .tarea-acciones { flex-shrink: 0; }
+}
+/* Computadora */
+@media (min-width: 960px) {
+  body { padding: 0 2rem 2rem; }
+  .layout { grid-template-columns: 300px 1fr; align-items: start; }
+  .layout > aside { position: sticky; top: 1rem; }
+  .filtros { grid-template-columns: 2fr 1fr 1fr 1fr; }
+}
+/* Respeta a quienes prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+}
